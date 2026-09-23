@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Kibo — Reabasto para tu hogar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F3EDE4;
+            --surface: #FFFFFF;
+            --text: #2B2A27;
+            --text-2: #6B6558;
+            --border: rgba(43,42,39,0.12);
+            --terracota: #B5563C;
+            --terracota-strong: #963F29;
+            --salvia: #3F4B3B;
+            --ocre: #C79A56;
+            --tint: rgba(181,86,60,0.08);
+        }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #1C1815;
+                --surface: #241F1A;
+                --text: #F3EDE4;
+                --text-2: #C9C1B4;
+                --border: rgba(243,237,228,0.14);
+                --terracota: #D9805D;
+                --terracota-strong: #E39676;
+                --salvia: #8FA684;
+                --ocre: #DDB47C;
+                --tint: rgba(217,128,93,0.14);
+            }
+        }
+        :root[data-theme="dark"] {
+            --bg: #1C1815; --surface: #241F1A; --text: #F3EDE4; --text-2: #C9C1B4;
+            --border: rgba(243,237,228,0.14); --terracota: #D9805D; --terracota-strong: #E39676;
+            --salvia: #8FA684; --ocre: #DDB47C; --tint: rgba(217,128,93,0.14);
+        }
+        * { box-sizing: border-box; }
+        html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        .serif { font-family: 'Fraunces', serif; }
+        .card { background: var(--surface); border: 1px solid var(--border); }
+        .option-btn { transition: all 0.15s ease; border: 1px solid var(--border); }
+        .option-btn.active { border-color: var(--terracota); background: var(--tint); }
+        .contents-tab-btn { border: 1px solid var(--border); color: var(--text-2); background: transparent; transition: all 0.15s ease; }
+        .contents-tab-btn.active { border-color: var(--terracota); background: var(--tint); color: var(--terracota); }
+        .btn-primary { background: var(--terracota); color: #FBF3EC; }
+        .btn-primary:hover { background: var(--terracota-strong); }
+        input, select {
+            background: var(--bg); border: 1px solid var(--border); color: var(--text);
+        }
+        input::placeholder { color: var(--text-2); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen antialiased">
+
+    <header class="w-full border-b sticky top-0 z-50" style="border-color:var(--border); background:var(--bg); padding-top: env(safe-area-inset-top,0px);">
+        <div class="max-w-6xl mx-auto px-5 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+                    <circle cx="32" cy="32" r="30" fill="var(--terracota)"/>
+                    <path d="M16 40 C16 26, 26 18, 32 14 C38 18, 48 26, 48 40 L48 44 C48 46 46.5 47.5 44.5 47.5 L19.5 47.5 C17.5 47.5 16 46 16 44 Z" fill="var(--bg)"/>
+                    <circle cx="32" cy="33" r="5.5" fill="var(--salvia)"/>
+                </svg>
+                <span class="serif text-2xl" style="font-weight:500;">kibo</span>
+            </div>
+            <a href="https://wa.me/528134123454" target="_blank" class="flex items-center gap-2 text-xs sm:text-sm font-medium hover:opacity-80 transition-opacity" style="color:var(--text);">
+                <svg class="w-4 h-4" style="color:#2FA95C;" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                <span class="hidden sm:inline">Escríbenos</span> +52 81 3412 3454
+            </a>
+        </div>
+    </header>
+
+    <section class="max-w-4xl mx-auto px-4 sm:px-5 py-14 sm:py-20 text-center">
+        <span class="text-xs font-semibold uppercase tracking-widest" style="color:var(--ocre);">Reabasto para tu hogar</span>
+        <h1 class="serif text-4xl sm:text-5xl mt-3 mb-4" style="font-weight:500; color:var(--text);">Tu casa, siempre lista.</h1>
+        <p class="text-sm sm:text-base leading-relaxed max-w-xl mx-auto" style="color:var(--text-2);">
+            Cuidado personal, papel y limpieza, calibrado a lo que tu casa realmente consume. No es ahorrarte tiempo — es dejar de tener que pensarlo.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 text-left">
+            <div class="card rounded-xl p-4">
+                <svg class="w-4 h-4 mb-2" style="color:var(--terracota);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <p class="text-sm font-medium" style="color:var(--text);">Nunca te quedas sin lo esencial</p>
+            </div>
+            <div class="card rounded-xl p-4">
+                <svg class="w-4 h-4 mb-2" style="color:var(--terracota);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <p class="text-sm font-medium" style="color:var(--text);">Entrega local en tu privada, Santiago NL</p>
+            </div>
+            <div class="card rounded-xl p-4">
+                <svg class="w-4 h-4 mb-2" style="color:var(--terracota);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <p class="text-sm font-medium" style="color:var(--text);">Sin plazo forzoso — pausa o cancela cuando quieras</p>
+            </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 sm:p-7 mt-10 text-left">
+            <div class="flex items-center justify-between border-b pb-4 mb-5" style="border-color:var(--border);">
+                <h2 class="text-base font-medium" style="color:var(--text);">¿Qué incluye tu caja?</h2>
+                <span class="text-xs" style="color:var(--text-2);">Contenido base por plan</span>
+            </div>
+
+            <div class="flex gap-2" role="tablist">
+                <button type="button" onclick="showContents(1, this)" class="contents-tab-btn active text-xs font-medium px-4 py-2 rounded-full" data-plan="1">Individual</button>
+                <button type="button" onclick="showContents(2, this)" class="contents-tab-btn text-xs font-medium px-4 py-2 rounded-full" data-plan="2">Duo</button>
+                <button type="button" onclick="showContents(4, this)" class="contents-tab-btn text-xs font-medium px-4 py-2 rounded-full" data-plan="4">Family</button>
+            </div>
+
+            <div class="mt-5">
+                <div id="contents-1" class="contents-panel grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:var(--ocre);">Cuidado personal</p>
+                        <ul class="space-y-1" style="color:var(--text-2);">
+                            <li>Shampoo</li><li>Gel de ducha</li><li>Desodorante</li><li>Crema dental</li><li>Jabón de manos</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:var(--ocre);">Papel</p>
+                        <ul class="space-y-1" style="color:var(--text-2);">
+                            <li>Papel higiénico</li><li>Toallas de cocina</li><li>Pañuelos faciales</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:var(--ocre);">Limpieza y ropa</p>
+                        <ul class="space-y-1" style="color:var(--text-2);">
+                            <li>Detergente para ropa</li><li>Pastillas lavavajillas</li><li>Limpiador multiusos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="contents-2" class="contents-panel grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm" style="display:none;">
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:var(--ocre);">Cuidado personal</p>
+                        <ul class="space-y-1" style="color:var(--text-2);">
+                            <li>Shampoo (x2)</li><li>Gel de ducha (x2)</li><li>Desodorante (x2)</li><li>Crema dental (x2)</li><li>Jabón de manos</li><li>Crema hidratante</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:var(--ocre);">Papel</p>
+                        <ul class="space-y-1" style="color:var(--text-2);">
+                            <li>Papel higiénico (x2)</li><li>Toallas de cocina (x2)</li><li>Pañuelos faciales</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:var(--ocre);">Limpieza y ropa</p>
+                        <ul class="space-y-1" style="color:var(--text-2);">
+                            <li>Detergente para ropa</li><li>Suavizante de telas</li><li>Pastillas lavavajillas</li><li>Limpiador multiusos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="contents-4" class="contents-panel grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm" style="display:none;">
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:var(--ocre);">Cuidado personal</p>
+                        <ul class="space-y-1" style="color:var(--text-2);">
+                            <li>Shampoo (x3)</li><li>Gel de ducha (x3)</li><li>Desodorante (x3)</li><li>Crema dental (x3)</li><li>Jabón de manos (x2)</li><li>Crema hidratante (x2)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:var(--ocre);">Papel</p>
+                        <ul class="space-y-1" style="color:var(--text-2);">
+                            <li>Papel higiénico (x3)</li><li>Toallas de cocina (x3)</li><li>Pañuelos faciales (x2)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:var(--ocre);">Limpieza y ropa</p>
+                        <ul class="space-y-1" style="color:var(--text-2);">
+                            <li>Detergente para ropa (x2)</li><li>Suavizante de telas</li><li>Pastillas lavavajillas (x2)</li><li>Limpiador multiusos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[11px] pt-4" style="color:var(--text-2);">Marcas específicas se confirman al darte de alta, según tus preferencias de fórmula y disponibilidad.</p>
+        </div>
+
+        <button type="button" onclick="openConfigurator()" class="btn-primary mt-10 font-semibold py-4 px-10 rounded-xl text-sm uppercase tracking-wider transition-colors">
+            Arma tu pedido
+        </button>
+    </section>
+
+    <main id="configurator" class="max-w-6xl mx-auto px-4 sm:px-5 pb-16 w-full hidden grid-cols-1 lg:grid-cols-12 gap-8 items-start" style="display:none;">
+
+        <div class="lg:col-span-8 space-y-7">
+            <div>
+                <h2 class="serif text-2xl sm:text-3xl mb-1" style="font-weight:500; color:var(--text);">Arma tu pedido</h2>
+                <p class="text-sm" style="color:var(--text-2);">Elige el tamaño de tu hogar y personaliza tus módulos.</p>
+            </div>
+
+            <section class="card rounded-2xl p-6 sm:p-7 space-y-5">
+                <div class="flex items-center justify-between border-b pb-4" style="border-color:var(--border);">
+                    <div class="flex items-center gap-3">
+                        <span class="w-7 h-7 rounded-full text-xs font-semibold flex items-center justify-center" style="background:var(--tint); color:var(--terracota); border:1px solid var(--border);">1</span>
+                        <h2 class="text-base font-medium" style="color:var(--text);">Integrantes en el hogar</h2>
+                    </div>
+                    <span class="text-xs" style="color:var(--text-2);">Define el volumen base</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <button type="button" onclick="setMembers(1, this)" class="option-btn active rounded-xl p-4 text-left">
+                        <span class="block text-2xl font-semibold" style="color:var(--text);">1</span>
+                        <span class="text-xs mt-1 block" style="color:var(--text-2);">Individual</span>
+                        <span class="text-[11px] mt-2 block font-medium" style="color:var(--terracota);">$1,550 MXN/mes</span>
+                    </button>
+
+                    <button type="button" onclick="setMembers(2, this)" class="option-btn rounded-xl p-4 text-left">
+                        <span class="block text-2xl font-semibold" style="color:var(--text);">2</span>
+                        <span class="text-xs mt-1 block" style="color:var(--text-2);">Pareja / Duo</span>
+                        <span class="text-[11px] mt-2 block font-medium" style="color:var(--terracota);">$2,850 MXN/mes</span>
+                    </button>
+
+                    <button type="button" onclick="setMembers(4, this)" class="option-btn rounded-xl p-4 text-left">
+                        <span class="block text-2xl font-semibold" style="color:var(--text);">3 - 4</span>
+                        <span class="text-xs mt-1 block" style="color:var(--text-2);">Familia</span>
+                        <span class="text-[11px] mt-2 block font-medium" style="color:var(--terracota);">$3,950 MXN/mes</span>
+                    </button>
+
+                    <button type="button" onclick="setMembers(5, this)" class="option-btn rounded-xl p-4 text-left">
+                        <span class="block text-2xl font-semibold" style="color:var(--text);">5+</span>
+                        <span class="text-xs mt-1 block" style="color:var(--text-2);">Residencia VIP</span>
+                        <span class="text-[11px] mt-2 block font-medium" style="color:var(--terracota);">Cotización</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="card rounded-2xl p-6 sm:p-7 space-y-5">
+                <div class="flex items-center justify-between border-b pb-4" style="border-color:var(--border);">
+                    <div class="flex items-center gap-3">
+                        <span class="w-7 h-7 rounded-full text-xs font-semibold flex items-center justify-center" style="background:var(--tint); color:var(--terracota); border:1px solid var(--border);">2</span>
+                        <h2 class="text-base font-medium" style="color:var(--text);">Módulos de especialidad</h2>
+                    </div>
+                    <span class="text-xs" style="color:var(--text-2);">Opcional</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label class="rounded-xl p-4 flex items-start justify-between gap-3 cursor-pointer" style="border:1px solid var(--border);">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-medium text-sm" style="color:var(--text);">Haircare Especializado</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded" style="background:var(--tint); color:var(--terracota);">+$550/mes</span>
+                            </div>
+                            <p class="text-xs mt-1" style="color:var(--text-2);">Líneas semi-profesionales para cabello teñido, rizado o cuero cabelludo sensible.</p>
+                        </div>
+                        <input type="checkbox" id="addonHair" onchange="calculateTotal()" class="mt-1 w-5 h-5 shrink-0 cursor-pointer" style="accent-color:var(--terracota);">
+                    </label>
+
+                    <label class="rounded-xl p-4 flex items-start justify-between gap-3 cursor-pointer" style="border:1px solid var(--border);">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-medium text-sm" style="color:var(--text);">Skincare & Dermocosmética</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded" style="background:var(--tint); color:var(--terracota);">+$650/mes</span>
+                            </div>
+                            <p class="text-xs mt-1" style="color:var(--text-2);">Limpiador facial, hidratante de rutina y protector solar.</p>
+                        </div>
+                        <input type="checkbox" id="addonSkin" onchange="calculateTotal()" class="mt-1 w-5 h-5 shrink-0 cursor-pointer" style="accent-color:var(--terracota);">
+                    </label>
+
+                    <label class="rounded-xl p-4 flex items-start justify-between gap-3 cursor-pointer" style="border:1px solid var(--border);">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-medium text-sm" style="color:var(--text);">Kibo Kids & Maternidad</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded" style="background:var(--tint); color:var(--terracota);">+$850/mes</span>
+                            </div>
+                            <p class="text-xs mt-1" style="color:var(--text-2);">Pañales por etapa, toallitas biodegradables y crema dermatológica. Precio de etapa base — se ajusta según edad.</p>
+                        </div>
+                        <input type="checkbox" id="addonKids" onchange="calculateTotal()" class="mt-1 w-5 h-5 shrink-0 cursor-pointer" style="accent-color:var(--terracota);">
+                    </label>
+
+                    <label class="rounded-xl p-4 flex items-start justify-between gap-3 cursor-pointer" style="border:1px solid var(--border);">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-medium text-sm" style="color:var(--text);">Kibo Pet Premium</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded" style="background:var(--tint); color:var(--terracota);">+$750/mes</span>
+                            </div>
+                            <p class="text-xs mt-1" style="color:var(--text-2);">Alimento de gama alta + bolsas de higiene. Precio de mascota pequeña — se ajusta según tamaño.</p>
+                        </div>
+                        <input type="checkbox" id="addonPet" onchange="calculateTotal()" class="mt-1 w-5 h-5 shrink-0 cursor-pointer" style="accent-color:var(--terracota);">
+                    </label>
+                </div>
+            </section>
+
+            <section class="card rounded-2xl p-6 sm:p-7 space-y-5">
+                <div class="flex items-center justify-between border-b pb-4" style="border-color:var(--border);">
+                    <div class="flex items-center gap-3">
+                        <span class="w-7 h-7 rounded-full text-xs font-semibold flex items-center justify-center" style="background:var(--tint); color:var(--terracota); border:1px solid var(--border);">3</span>
+                        <h2 class="text-base font-medium" style="color:var(--text);">Tus datos y entrega</h2>
+                    </div>
+                    <span class="text-xs" style="color:var(--text-2);">Confidencial</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium mb-1" style="color:var(--text-2);">Nombre completo</label>
+                        <input type="text" id="custName" placeholder="Ej. Roberto Garza" class="w-full rounded-xl px-4 py-3 text-sm focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium mb-1" style="color:var(--text-2);">WhatsApp de contacto</label>
+                        <input type="tel" id="custPhone" placeholder="+52 81 0000 0000" class="w-full rounded-xl px-4 py-3 text-sm focus:outline-none">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-medium mb-1" style="color:var(--text-2);">Dirección de residencia</label>
+                        <input type="text" id="custAddress" placeholder="Calle, número, privada, Santiago, NL" class="w-full rounded-xl px-4 py-3 text-sm focus:outline-none">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-medium mb-1" style="color:var(--text-2);">Preferencias de fórmulas / aromas</label>
+                        <select id="custPreference" class="w-full rounded-xl px-4 py-3 text-sm focus:outline-none">
+                            <option value="Aromas neutros / sin fragancia">Aromas neutros / sin fragancia</option>
+                            <option value="Líneas dermocosméticas (piel sensible)">Líneas dermocosméticas (piel sensible)</option>
+                            <option value="Productos ecológicos / biodegradables">Productos ecológicos / biodegradables</option>
+                            <option value="Grooming masculino especializado">Grooming masculino especializado</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="lg:col-span-4 lg:sticky lg:top-28">
+            <div class="card rounded-2xl p-6 sm:p-7 space-y-6">
+                <div class="border-b pb-4" style="border-color:var(--border);">
+                    <span class="text-[11px] uppercase tracking-widest font-semibold" style="color:var(--ocre);">Resumen</span>
+                    <h3 id="planTitleDisplay" class="serif text-xl mt-1" style="color:var(--text);">Plan Kibo Individual</h3>
+                </div>
+
+                <div class="space-y-3 text-sm" style="color:var(--text);">
+                    <div class="flex justify-between items-center">
+                        <span id="basePlanLabel" style="color:var(--text-2);">Plan base (1 integrante)</span>
+                        <span id="basePlanPrice" class="font-medium">$1,550 MXN</span>
+                    </div>
+
+                    <div id="activeAddonsContainer" class="space-y-2 border-t pt-3 hidden" style="border-color:var(--border);">
+                        <span class="text-[10px] uppercase tracking-wider block font-semibold" style="color:var(--text-2);">Módulos activos:</span>
+                        <div id="addonsList" class="space-y-1.5 text-xs pl-1" style="color:var(--terracota);"></div>
+                    </div>
+
+                    <div class="border-t pt-3 flex justify-between items-baseline" style="border-color:var(--border);">
+                        <span class="text-sm font-medium" style="color:var(--text);">Inversión mensual</span>
+                        <div class="text-right">
+                            <span id="totalPriceDisplay" class="text-2xl font-semibold" style="color:var(--terracota);">$1,550</span>
+                            <span id="currencyLabel" class="text-[10px] block" style="color:var(--text-2);">MXN / mes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rounded-xl p-4 space-y-2 text-[12px]" style="background:var(--bg); border:1px solid var(--border); color:var(--text-2);">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 shrink-0" style="color:var(--terracota);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <span>Nunca te quedas sin lo esencial</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 shrink-0" style="color:var(--terracota);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <span>Entrega local en tu privada, Santiago NL</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 shrink-0" style="color:var(--terracota);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <span>Sin plazo forzoso — pausa o cancela cuando quieras</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-1">
+                    <button type="button" onclick="checkoutStripe()" id="stripeBtn" class="btn-primary w-full font-semibold py-3.5 rounded-xl text-xs uppercase tracking-wider transition-colors">
+                        Activar membresía
+                    </button>
+                    <button type="button" onclick="checkoutWhatsApp()" class="w-full font-medium py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-colors" style="border:1px solid var(--border); color:var(--text);">
+                        <svg class="w-4 h-4" style="color:#2FA95C;" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                        Consultar por WhatsApp
+                    </button>
+                </div>
+
+                <p class="text-[10px] text-center" style="color:var(--text-2);">Pago procesado de forma segura. Puedes pausar o cancelar cuando quieras.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="w-full border-t py-6 text-center text-xs" style="border-color:var(--border); color:var(--text-2); padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));">
+        <p>Kibo — reabasto para tu hogar · Santiago, Nuevo León</p>
+    </footer>
+
+    <script>
+    let selectedMembers = 1;
+
+    // Price IDs exactos obtenidos de tu panel de Stripe
+    const stripePrices = {
+        plans: {
+            1: "price_1UIhFbPTj0BJjhvjY8igRWtI", // Plan Kibo Individual ($1,550 MXN)
+            2: "price_1UIhViPTj0BJjhvjrvv15kmM", // Plan Kibo Duo ($2,850 MXN)
+            4: "price_1UIhXXPTj0BJjhvj871EHtov"  // Plan Kibo Family ($3,950 MXN)
+        },
+        addons: {
+            hair: "price_1UIhc7PTj0BJjhvj1Hma292J", // Haircare Especializado ($550 MXN)
+            skin: "price_1UIhdxPTj0BJjhvjHyyFsFpx", // Skincare & Dermocosmética ($650 MXN)
+            kids: "price_1UIhdHPTj0BJjhvjaXxrfYmg", // Kibo Kids & Maternidad ($850 MXN)
+            pet:  "price_1UIhedPTj0BJjhvjpjZ9rydb"  // Kibo Pet Premium ($750 MXN)
+        }
+    };
+
+    let basePrices = {
+        1: { name: "Plan Kibo Individual", price: 1550, label: "Plan base (1 integrante)" },
+        2: { name: "Plan Kibo Duo", price: 2850, label: "Plan base (2 integrantes)" },
+        4: { name: "Plan Kibo Family", price: 3950, label: "Plan base (3-4 integrantes)" },
+        5: { name: "Kibo Estate (VIP)", price: 0, label: "Residencia VIP a medida" }
+    };
+
+    let addonPrices = {
+        hair: { name: "Haircare Especializado", price: 550 },
+        skin: { name: "Skincare Dermocosmético", price: 650 },
+        kids: { name: "Kibo Kids & Maternidad", price: 850 },
+        pet:  { name: "Kibo Pet Premium", price: 750 }
+    };
+
+    const PHONE_NUMBER = "528134123454";
+
+    function openConfigurator() {
+        const el = document.getElementById('configurator');
+        el.classList.remove('hidden');
+        el.style.display = 'grid';
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function showContents(plan, btn) {
+        document.querySelectorAll('.contents-panel').forEach(p => p.style.display = 'none');
+        document.getElementById('contents-' + plan).style.display = 'grid';
+        document.querySelectorAll('.contents-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function setMembers(count, btn) {
+        selectedMembers = count;
+        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        calculateTotal();
+    }
+
+    function calculateTotal() {
+        let baseInfo = basePrices[selectedMembers];
+        let currentTotal = baseInfo.price;
+
+        document.getElementById('planTitleDisplay').innerText = baseInfo.name;
+        document.getElementById('basePlanLabel').innerText = baseInfo.label;
+
+        if (selectedMembers === 5) {
+            document.getElementById('basePlanPrice').innerText = "A cotizar";
+            document.getElementById('totalPriceDisplay').innerText = "Cotización";
+            document.getElementById('currencyLabel').innerText = "Atención personalizada";
+            document.getElementById('stripeBtn').innerText = "Solicitar cotización VIP";
+        } else {
+            document.getElementById('basePlanPrice').innerText = `$${baseInfo.price.toLocaleString()} MXN`;
+            document.getElementById('currencyLabel').innerText = "MXN / mes";
+            document.getElementById('stripeBtn').innerText = "Activar membresía";
+        }
+
+        let activeAddonsList = [];
+        if (document.getElementById('addonHair').checked) { currentTotal += addonPrices.hair.price; activeAddonsList.push(addonPrices.hair); }
+        if (document.getElementById('addonSkin').checked) { currentTotal += addonPrices.skin.price; activeAddonsList.push(addonPrices.skin); }
+        if (document.getElementById('addonKids').checked) { currentTotal += addonPrices.kids.price; activeAddonsList.push(addonPrices.kids); }
+        if (document.getElementById('addonPet').checked) { currentTotal += addonPrices.pet.price; activeAddonsList.push(addonPrices.pet); }
+
+        const addonsContainer = document.getElementById('activeAddonsContainer');
+        const addonsListEl = document.getElementById('addonsList');
+
+        if (activeAddonsList.length > 0) {
+            addonsContainer.classList.remove('hidden');
+            addonsListEl.innerHTML = activeAddonsList.map(item =>
+                `<div class="flex justify-between"><span>+ ${item.name}</span><span>+$${item.price}</span></div>`
+            ).join('');
+        } else {
+            addonsContainer.classList.add('hidden');
+            addonsListEl.innerHTML = '';
+        }
+
+        if (selectedMembers !== 5) {
+            document.getElementById('totalPriceDisplay').innerText = `$${currentTotal.toLocaleString()}`;
+        }
+    }
+
+    function getFormData() {
+        return {
+            name: document.getElementById('custName').value.trim() || "No especificado",
+            phone: document.getElementById('custPhone').value.trim() || "No especificado",
+            address: document.getElementById('custAddress').value.trim() || "No especificada",
+            preference: document.getElementById('custPreference').value,
+            plan: basePrices[selectedMembers].name,
+            total: document.getElementById('totalPriceDisplay').innerText
+        };
+    }
+
+    function checkoutWhatsApp() {
+        const data = getFormData();
+        let message = `Hola Kibo, quiero consultar/activar mi membresía:\n\n`;
+        message += `Nombre: ${data.name}\n`;
+        message += `Teléfono: ${data.phone}\n`;
+        message += `Dirección: ${data.address}\n`;
+        message += `Plan: ${data.plan}\n`;
+        message += `Preferencia: ${data.preference}\n`;
+        message += `Inversión estimada: ${data.total}\n\n`;
+        message += `Quedo a la espera de sus indicaciones para coordinar mi primera entrega.`;
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`, '_blank');
+    }
+
+    async function checkoutStripe() {
+        if (selectedMembers === 5) { 
+            checkoutWhatsApp(); 
+            return; 
+        }
+
+        const stripeBtn = document.getElementById('stripeBtn');
+        stripeBtn.disabled = true;
+        stripeBtn.innerText = "Procesando...";
+
+        // Juntar los Price IDs según lo seleccionado
+        const selectedPrices = [];
+
+        if (stripePrices.plans[selectedMembers]) {
+            selectedPrices.push(stripePrices.plans[selectedMembers]);
+        }
+
+        if (document.getElementById('addonHair').checked) selectedPrices.push(stripePrices.addons.hair);
+        if (document.getElementById('addonSkin').checked) selectedPrices.push(stripePrices.addons.skin);
+        if (document.getElementById('addonKids').checked) selectedPrices.push(stripePrices.addons.kids);
+        if (document.getElementById('addonPet').checked) selectedPrices.push(stripePrices.addons.pet);
+
+        const formData = getFormData();
+
+        try {
+            // Enviar los productos al backend para crear la sesión de Stripe Checkout
+            const response = await fetch('/api/create-checkout-session', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    items: selectedPrices,
+                    customerData: formData
+                })
+            });
+
+            const session = await response.json();
+
+            if (session.url) {
+                // Redirigir a la URL dinámica de Stripe
+                window.location.href = session.url;
+            } else {
+                alert("Ocurrió un problema al generar la sesión de pago.");
+                stripeBtn.disabled = false;
+                stripeBtn.innerText = "Activar membresía";
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("No se pudo conectar con el servidor de pagos.");
+            stripeBtn.disabled = false;
+            stripeBtn.innerText = "Activar membresía";
+        }
+    }
+
+    calculateTotal();
+</script>
+</body>
+</html>
