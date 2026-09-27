@@ -8,12 +8,24 @@ module.exports = async (req, res) => {
     try {
         const { items, customerData } = req.body;
 
+        // 1. Crear el cliente en Stripe con sus datos
+        const customer = await stripe.customers.create({
+            name: customerData.name,
+            phone: customerData.phone,
+            metadata: {
+                direccion: customerData.address,
+                preferencia: customerData.preference
+            }
+        });
+
         const lineItems = items.map(priceId => ({
             price: priceId,
             quantity: 1,
         }));
 
+        // 2. Asociar el cliente a la sesión de Checkout
         const session = await stripe.checkout.sessions.create({
+            customer: customer.id,
             payment_method_types: ['card'],
             mode: 'subscription',
             line_items: lineItems,
